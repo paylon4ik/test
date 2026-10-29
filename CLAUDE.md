@@ -6,6 +6,7 @@ Static prototype pages for a fleet management platform.
 - Plain HTML and CSS only. No frameworks, no build tools.
 - One page per file (e.g. vehicles.html).
 - File names: lowercase, words joined with hyphens (e.g. drivers-list.html).
+- All pages must link styles.css and use its variables. Never hard-code colors, font sizes, or spacing.
 
 ## Scope rules
 - Only change files the task names. If another file seems to need a change, ask first.

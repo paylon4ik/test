@@ -4,68 +4,45 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Drivers</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --bg: #f6f7f9;
-      --surface: #ffffff;
-      --border: #e3e6ea;
-      --text: #1b1f24;
-      --muted: #5b6470;
-      --primary: #2459d6;
-      --primary-hover: #1c48b0;
-      --on-primary: #ffffff;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #111418;
-        --surface: #1a1e24;
-        --border: #2b3139;
-        --text: #eef1f4;
-        --muted: #a2abb6;
-        --primary: #5b8cff;
-        --primary-hover: #7aa2ff;
-        --on-primary: #0b1020;
-      }
-    }
-
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: var(--font-family);
+      background: var(--color-background);
+      color: var(--color-text);
       line-height: 1.5;
     }
 
     main {
       max-width: 960px;
       margin: 0 auto;
-      padding: 32px 16px;
+      padding: var(--space-32) var(--space-16);
     }
 
     h1 {
-      font-size: 1.5rem;
-      margin: 0 0 24px;
+      font-size: var(--font-size-xl);
+      margin: 0 0 var(--space-24);
     }
 
     .empty-state {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 56px 24px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: calc(var(--space-32) + var(--space-24)) var(--space-24);
       text-align: center;
     }
 
     .empty-state h2 {
-      font-size: 1.0625rem;
-      margin: 0 0 8px;
+      font-size: var(--font-size-lg);
+      margin: 0 0 var(--space-8);
     }
 
     .empty-state p {
-      color: var(--muted);
-      margin: 0 auto 24px;
+      color: var(--color-text-muted);
+      margin: 0 auto var(--space-24);
       max-width: 36ch;
     }
 
@@ -73,18 +50,18 @@
       display: inline-block;
       font: inherit;
       font-weight: 600;
-      padding: 10px 20px;
+      padding: var(--space-8) var(--space-16);
       border: 0;
-      border-radius: 8px;
-      background: var(--primary);
-      color: var(--on-primary);
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: var(--color-on-primary);
       cursor: pointer;
     }
 
-    .button-primary:hover { background: var(--primary-hover); }
+    .button-primary:hover { background: var(--color-primary-hover); }
 
     .button-primary:focus-visible {
-      outline: 3px solid var(--primary);
+      outline: 3px solid var(--color-primary);
       outline-offset: 3px;
     }
   </style>
