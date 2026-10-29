@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vehicle details</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --border: #e3e6ea;
+      --text: #1b1f24;
+      --muted: #5b6470;
+      --primary: #2459d6;
+      --primary-hover: #1c48b0;
+      --on-primary: #ffffff;
+      --status-ok: #1a7f4b;
+      --status-ok-bg: #e6f4ec;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111418;
+        --surface: #1a1e24;
+        --border: #2b3139;
+        --text: #eef1f4;
+        --muted: #a2abb6;
+        --primary: #5b8cff;
+        --primary-hover: #7aa2ff;
+        --on-primary: #0b1020;
+        --status-ok: #5fd39a;
+        --status-ok-bg: #16291f;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 16px;
+    }
+
+    .page-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 0 0 24px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .plate {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 2px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9375rem;
+      letter-spacing: 0.06em;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+
+    .status-card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 24px;
+      margin: 0 0 16px;
+      border-left: 6px solid var(--status-ok);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--status-ok-bg);
+      color: var(--status-ok);
+      font-weight: 700;
+      font-size: 1.0625rem;
+    }
+
+    .status-badge::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 0;
+    }
+
+    .detail-grid .card { margin: 0; }
+
+    .detail-grid dt {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin: 0 0 4px;
+    }
+
+    .detail-grid dd {
+      margin: 0;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .detail-grid .meta {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
+
+    .button-primary {
+      display: inline-block;
+      font: inherit;
+      font-weight: 600;
+      padding: 10px 20px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--primary);
+      color: var(--on-primary);
+      cursor: pointer;
+    }
+
+    .button-primary:hover { background: var(--primary-hover); }
+
+    .button-primary:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <div>
+        <h1>Ford Transit 14</h1>
+        <span class="plate" aria-label="Plate number">KX21 BTD</span>
+      </div>
+      <button type="button" class="button-primary">Edit vehicle</button>
+    </header>
+
+    <section class="card status-card" aria-label="Status">
+      <span class="status-badge">Active</span>
+      <p>On a delivery route since 08:15 today.</p>
+    </section>
+
+    <dl class="detail-grid">
+      <div class="card">
+        <dt>Driver</dt>
+        <dd>Maria Lopez<span class="meta">Assigned 12 Oct 2026</span></dd>
+      </div>
+      <div class="card">
+        <dt>Location</dt>
+        <dd>Leeds, Kirkstall Rd<span class="meta">Updated 5 min ago</span></dd>
+      </div>
+      <div class="card">
+        <dt>Last service</dt>
+        <dd>3 Sep 2026<span class="meta">Next due 3 Mar 2027</span></dd>
+      </div>
+      <div class="card">
+        <dt>Mileage</dt>
+        <dd>48,215 mi<span class="meta">+312 mi this week</span></dd>
+      </div>
+    </dl>
+  </main>
+</body>
+</html>
