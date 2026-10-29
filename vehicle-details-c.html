@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Van 14 – Vehicle details</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --border: #e3e6ea;
+      --text: #1b1f24;
+      --muted: #5b6470;
+      --primary: #2459d6;
+      --primary-hover: #1c48b0;
+      --on-primary: #ffffff;
+      --map-land: #e8ece6;
+      --map-block: #dde3db;
+      --map-park: #cfe3c6;
+      --map-water: #bcd6ec;
+      --map-road: #ffffff;
+      --map-road-edge: #cfd5dc;
+      --map-route: #2459d6;
+      --status-active-bg: #e3f4e8;
+      --status-active-text: #17663a;
+      --status-active-dot: #22a35a;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111418;
+        --surface: #1a1e24;
+        --border: #2b3139;
+        --text: #eef1f4;
+        --muted: #a2abb6;
+        --primary: #5b8cff;
+        --primary-hover: #7aa2ff;
+        --on-primary: #0b1020;
+        --map-land: #1d2228;
+        --map-block: #242a31;
+        --map-park: #1f2e24;
+        --map-water: #1a2a3a;
+        --map-road: #343c46;
+        --map-road-edge: #2a3139;
+        --map-route: #5b8cff;
+        --status-active-bg: #173322;
+        --status-active-text: #8fe0ad;
+        --status-active-dot: #3cc777;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      height: 100vh;
+    }
+
+    /* Map */
+
+    .map {
+      position: relative;
+      overflow: hidden;
+      background: var(--map-land);
+    }
+
+    .map svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-label {
+      font: 600 15px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      fill: var(--muted);
+    }
+
+    .marker-halo { fill: var(--primary); opacity: 0.18; }
+    .marker-dot { fill: var(--primary); stroke: var(--surface); stroke-width: 5; }
+    .marker-tag rect { fill: var(--surface); stroke: var(--border); }
+    .marker-tag text {
+      font: 600 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      fill: var(--text);
+    }
+
+    .map-controls {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .map-control {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      font: inherit;
+      font-size: 1.25rem;
+      line-height: 1;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+
+    .map-control:hover { border-color: var(--muted); }
+
+    .map-back {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+
+    .map-back:hover { border-color: var(--muted); }
+
+    /* Side panel */
+
+    .panel {
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-header h1 {
+      font-size: 1.5rem;
+      margin: 0 0 4px;
+    }
+
+    .plate {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg);
+    }
+
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: var(--status-active-bg);
+      color: var(--status-active-text);
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--status-active-dot);
+    }
+
+    .details {
+      margin: 0;
+      padding: 8px 24px;
+    }
+
+    .detail {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail:last-child { border-bottom: 0; }
+
+    .detail dt {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .detail dd {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .detail .sub {
+      display: block;
+      font-weight: 400;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .panel-actions {
+      margin-top: auto;
+      padding: 16px 24px 24px;
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .button-primary,
+    .button-secondary {
+      flex: 1;
+      font: inherit;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 8px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .button-primary {
+      border: 0;
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .button-primary:hover { background: var(--primary-hover); }
+
+    .button-secondary {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .button-secondary:hover { border-color: var(--muted); }
+
+    .button-primary:focus-visible,
+    .button-secondary:focus-visible,
+    .map-control:focus-visible,
+    .map-back:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 3px;
+    }
+
+    /* Narrow screens: map on top, panel below */
+
+    @media (max-width: 760px) {
+      .layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: 55vh auto;
+        height: auto;
+      }
+
+      .panel {
+        border-left: 0;
+        border-top: 1px solid var(--border);
+        overflow: visible;
+      }
+
+      .details,
+      .panel-header,
+      .panel-actions {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <section class="map" aria-label="Map showing the vehicle's current location">
+      <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <!-- Water -->
+        <path d="M0 640 C 180 600, 320 700, 520 660 S 860 600, 1000 650 L 1000 800 L 0 800 Z" fill="var(--map-water)"/>
+        <!-- Parks and blocks -->
+        <rect x="80" y="90" width="190" height="140" rx="10" fill="var(--map-park)"/>
+        <rect x="330" y="90" width="160" height="140" rx="6" fill="var(--map-block)"/>
+        <rect x="560" y="90" width="170" height="140" rx="6" fill="var(--map-block)"/>
+        <rect x="790" y="90" width="170" height="140" rx="6" fill="var(--map-block)"/>
+        <rect x="80" y="300" width="190" height="200" rx="6" fill="var(--map-block)"/>
+        <rect x="330" y="300" width="160" height="200" rx="6" fill="var(--map-block)"/>
+        <rect x="790" y="300" width="170" height="200" rx="10" fill="var(--map-park)"/>
+        <rect x="660" y="430" width="80" height="80" rx="6" fill="var(--map-block)"/>
+        <!-- Roads -->
+        <g stroke="var(--map-road-edge)" stroke-width="30" fill="none" stroke-linecap="round">
+          <path d="M0 265 H1000"/>
+          <path d="M0 545 C 300 545, 600 560, 1000 560"/>
+          <path d="M300 0 V560"/>
+          <path d="M760 0 V560"/>
+          <path d="M525 0 V265 L 580 368 L 760 368"/>
+        </g>
+        <g stroke="var(--map-road)" stroke-width="24" fill="none" stroke-linecap="round">
+          <path d="M0 265 H1000"/>
+          <path d="M0 545 C 300 545, 600 560, 1000 560"/>
+          <path d="M300 0 V560"/>
+          <path d="M760 0 V560"/>
+          <path d="M525 0 V265 L 580 368 L 760 368"/>
+        </g>
+        <!-- Route travelled -->
+        <path d="M300 545 V265 H525 L 580 368" stroke="var(--map-route)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12" opacity="0.8"/>
+        <!-- Labels -->
+        <text class="map-label" x="175" y="165" text-anchor="middle">Riverside Park</text>
+        <text class="map-label" x="200" y="290" text-anchor="middle">Harbor Rd</text>
+        <text class="map-label" x="520" y="730" text-anchor="middle">Port Basin</text>
+        <!-- Vehicle -->
+        <circle class="marker-halo" cx="580" cy="368" r="28"/>
+        <circle class="marker-dot" cx="580" cy="368" r="12"/>
+        <g class="marker-tag">
+          <rect x="540" y="306" width="80" height="30" rx="6"/>
+          <text x="580" y="327" text-anchor="middle">Van 14</text>
+        </g>
+      </svg>
+
+
+      <a class="map-back" href="vehicles.html">&larr; Back to vehicles</a>
+
+      <div class="map-controls">
+        <button type="button" class="map-control" aria-label="Zoom in">+</button>
+        <button type="button" class="map-control" aria-label="Zoom out">&minus;</button>
+        <button type="button" class="map-control" aria-label="Center on vehicle">&#9678;</button>
+      </div>
+    </section>
+
+    <aside class="panel" aria-labelledby="vehicle-name">
+      <header class="panel-header">
+        <h1 id="vehicle-name">Van 14</h1>
+        <div class="header-meta">
+          <span class="plate" aria-label="Plate number">KX 482 TR</span>
+          <span class="status">On trip</span>
+        </div>
+      </header>
+
+      <dl class="details">
+        <div class="detail">
+          <dt>Driver</dt>
+          <dd>Maria Lopez<span class="sub">+1 555 0142</span></dd>
+        </div>
+        <div class="detail">
+          <dt>Location</dt>
+          <dd>Harbor Rd and Dock St<span class="sub">Updated 2 min ago</span></dd>
+        </div>
+        <div class="detail">
+          <dt>Last service</dt>
+          <dd>12 Aug 2026<span class="sub">3,420 km ago · next due at 90,000 km</span></dd>
+        </div>
+        <div class="detail">
+          <dt>Mileage</dt>
+          <dd>84,210 km</dd>
+        </div>
+      </dl>
+
+      <div class="panel-actions">
+        <button type="button" class="button-secondary">Schedule service</button>
+        <button type="button" class="button-primary">Contact driver</button>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>
