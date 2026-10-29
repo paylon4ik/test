@@ -4,59 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vehicle details</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --bg: #f6f7f9;
-      --surface: #ffffff;
-      --surface-alt: #f9fafb;
-      --border: #e3e6ea;
-      --text: #1b1f24;
-      --muted: #5b6470;
-      --primary: #2459d6;
-      --primary-hover: #1c48b0;
-      --on-primary: #ffffff;
-      --status-active-bg: #e3f4e8;
-      --status-active-text: #17663a;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #111418;
-        --surface: #1a1e24;
-        --surface-alt: #1e232a;
-        --border: #2b3139;
-        --text: #eef1f4;
-        --muted: #a2abb6;
-        --primary: #5b8cff;
-        --primary-hover: #7aa2ff;
-        --on-primary: #0b1020;
-        --status-active-bg: #173323;
-        --status-active-text: #7fd8a0;
-      }
-    }
-
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: var(--font-family);
+      background: var(--color-background);
+      color: var(--color-text);
       line-height: 1.5;
     }
 
     main {
       max-width: 960px;
       margin: 0 auto;
-      padding: 32px 16px;
+      padding: var(--space-32) var(--space-16);
     }
 
     .back-link {
       display: inline-block;
-      color: var(--primary);
-      font-size: 0.875rem;
+      color: var(--color-primary);
+      font-size: var(--font-size-sm);
       text-decoration: none;
-      margin-bottom: 8px;
+      margin-bottom: var(--space-8);
     }
 
     .back-link:hover { text-decoration: underline; }
@@ -66,12 +37,12 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: var(--space-12);
+      margin-bottom: var(--space-24);
     }
 
     h1 {
-      font-size: 1.5rem;
+      font-size: var(--font-size-xl);
       margin: 0;
     }
 
@@ -79,28 +50,28 @@
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      font-size: 0.875rem;
+      font-size: var(--font-size-sm);
     }
 
     .details-table th,
     .details-table td {
       text-align: left;
       vertical-align: top;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--border);
+      padding: var(--space-8) var(--space-12);
+      border-bottom: 1px solid var(--color-border);
     }
 
     .details-table tr:last-child th,
     .details-table tr:last-child td { border-bottom: 0; }
 
     .details-table thead th {
-      background: var(--surface-alt);
-      color: var(--muted);
-      font-size: 0.75rem;
+      background: var(--color-surface-alt);
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -109,46 +80,46 @@
     .details-table tbody th {
       width: 9rem;
       font-weight: 600;
-      color: var(--muted);
+      color: var(--color-text-muted);
     }
 
-    .details-table .meta { color: var(--muted); }
+    .details-table .meta { color: var(--color-text-muted); }
 
     .numeric { font-variant-numeric: tabular-nums; }
 
     .status {
       display: inline-block;
-      padding: 0 8px;
-      border-radius: 999px;
-      font-size: 0.8125rem;
+      padding: 0 var(--space-8);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
       font-weight: 600;
-      background: var(--status-active-bg);
-      color: var(--status-active-text);
+      background: var(--color-success-bg);
+      color: var(--color-success);
     }
 
     .button-primary {
       display: inline-block;
       font: inherit;
       font-weight: 600;
-      padding: 10px 20px;
+      padding: var(--space-8) var(--space-16);
       border: 0;
-      border-radius: 8px;
-      background: var(--primary);
-      color: var(--on-primary);
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: var(--color-on-primary);
       cursor: pointer;
     }
 
-    .button-primary:hover { background: var(--primary-hover); }
+    .button-primary:hover { background: var(--color-primary-hover); }
 
     .button-primary:focus-visible,
     .back-link:focus-visible {
-      outline: 3px solid var(--primary);
+      outline: 3px solid var(--color-primary);
       outline-offset: 3px;
     }
 
     @media (max-width: 480px) {
       .details-table th,
-      .details-table td { padding: 8px; }
+      .details-table td { padding: var(--space-8); }
       .details-table tbody th { width: 6.5rem; }
     }
   </style>

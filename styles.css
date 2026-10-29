@@ -1,0 +1,78 @@
+/* Design tokens. Every page links this file and uses these variables. */
+
+:root {
+  /* Colors */
+  --color-primary: #2459d6;
+  --color-primary-hover: #1c48b0;
+  --color-on-primary: #ffffff;
+  --color-text: #1b1f24;
+  --color-text-muted: #5b6470;
+  --color-background: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f9fafb;
+  --color-border: #e3e6ea;
+  --color-success: #17663a;
+  --color-success-bg: #e3f4e8;
+  --color-warning: #8a5a00;
+  --color-warning-bg: #fdf3dc;
+  --color-danger: #b42318;
+  --color-danger-bg: #fde8e6;
+  --color-shadow: rgba(0, 0, 0, 0.12);
+
+  /* Map colors */
+  --color-map-land: #e8ece6;
+  --color-map-block: #dde3db;
+  --color-map-park: #cfe3c6;
+  --color-map-water: #bcd6ec;
+  --color-map-road: #ffffff;
+  --color-map-road-edge: #cfd5dc;
+
+  /* Typography */
+  --font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+
+  /* Spacing */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #5b8cff;
+    --color-primary-hover: #7aa2ff;
+    --color-on-primary: #0b1020;
+    --color-text: #eef1f4;
+    --color-text-muted: #a2abb6;
+    --color-background: #111418;
+    --color-surface: #1a1e24;
+    --color-surface-alt: #1e232a;
+    --color-border: #2b3139;
+    --color-success: #7fd8a0;
+    --color-success-bg: #173323;
+    --color-warning: #f0c060;
+    --color-warning-bg: #33280f;
+    --color-danger: #ff8a80;
+    --color-danger-bg: #3a1a18;
+
+    --color-map-land: #1d2228;
+    --color-map-block: #242a31;
+    --color-map-park: #1f2e24;
+    --color-map-water: #1a2a3a;
+    --color-map-road: #343c46;
+    --color-map-road-edge: #2a3139;
+  }
+}

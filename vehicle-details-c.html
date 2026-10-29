@@ -4,60 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Van 14 – Vehicle details</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --bg: #f6f7f9;
-      --surface: #ffffff;
-      --border: #e3e6ea;
-      --text: #1b1f24;
-      --muted: #5b6470;
-      --primary: #2459d6;
-      --primary-hover: #1c48b0;
-      --on-primary: #ffffff;
-      --map-land: #e8ece6;
-      --map-block: #dde3db;
-      --map-park: #cfe3c6;
-      --map-water: #bcd6ec;
-      --map-road: #ffffff;
-      --map-road-edge: #cfd5dc;
-      --map-route: #2459d6;
-      --status-active-bg: #e3f4e8;
-      --status-active-text: #17663a;
-      --status-active-dot: #22a35a;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #111418;
-        --surface: #1a1e24;
-        --border: #2b3139;
-        --text: #eef1f4;
-        --muted: #a2abb6;
-        --primary: #5b8cff;
-        --primary-hover: #7aa2ff;
-        --on-primary: #0b1020;
-        --map-land: #1d2228;
-        --map-block: #242a31;
-        --map-park: #1f2e24;
-        --map-water: #1a2a3a;
-        --map-road: #343c46;
-        --map-road-edge: #2a3139;
-        --map-route: #5b8cff;
-        --status-active-bg: #173322;
-        --status-active-text: #8fe0ad;
-        --status-active-dot: #3cc777;
-      }
-    }
-
     * { box-sizing: border-box; }
 
     html, body { height: 100%; }
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: var(--font-family);
+      background: var(--color-background);
+      color: var(--color-text);
       line-height: 1.5;
     }
 
@@ -72,7 +29,7 @@
     .map {
       position: relative;
       overflow: hidden;
-      background: var(--map-land);
+      background: var(--color-map-land);
     }
 
     .map svg {
@@ -83,25 +40,29 @@
     }
 
     .map-label {
-      font: 600 15px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      fill: var(--muted);
+      font-family: var(--font-family);
+      font-size: var(--font-size-md);
+      font-weight: 600;
+      fill: var(--color-text-muted);
     }
 
-    .marker-halo { fill: var(--primary); opacity: 0.18; }
-    .marker-dot { fill: var(--primary); stroke: var(--surface); stroke-width: 5; }
-    .marker-tag rect { fill: var(--surface); stroke: var(--border); }
+    .marker-halo { fill: var(--color-primary); opacity: 0.18; }
+    .marker-dot { fill: var(--color-primary); stroke: var(--color-surface); stroke-width: 5; }
+    .marker-tag rect { fill: var(--color-surface); stroke: var(--color-border); }
     .marker-tag text {
-      font: 600 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      fill: var(--text);
+      font-family: var(--font-family);
+      font-size: var(--font-size-md);
+      font-weight: 600;
+      fill: var(--color-text);
     }
 
     .map-controls {
       position: absolute;
-      right: 16px;
-      bottom: 16px;
+      right: var(--space-16);
+      bottom: var(--space-16);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: var(--space-8);
     }
 
     .map-control {
@@ -110,88 +71,88 @@
       display: grid;
       place-items: center;
       font: inherit;
-      font-size: 1.25rem;
+      font-size: var(--font-size-lg);
       line-height: 1;
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 1px 4px var(--color-shadow);
     }
 
-    .map-control:hover { border-color: var(--muted); }
+    .map-control:hover { border-color: var(--color-text-muted); }
 
     .map-back {
       position: absolute;
-      left: 16px;
-      top: 16px;
+      left: var(--space-16);
+      top: var(--space-16);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      gap: var(--space-4);
+      padding: var(--space-8) var(--space-12);
+      background: var(--color-surface);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
       font-weight: 600;
-      font-size: 0.875rem;
+      font-size: var(--font-size-sm);
       text-decoration: none;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 1px 4px var(--color-shadow);
     }
 
-    .map-back:hover { border-color: var(--muted); }
+    .map-back:hover { border-color: var(--color-text-muted); }
 
     /* Side panel */
 
     .panel {
-      background: var(--surface);
-      border-left: 1px solid var(--border);
+      background: var(--color-surface);
+      border-left: 1px solid var(--color-border);
       overflow-y: auto;
       display: flex;
       flex-direction: column;
     }
 
     .panel-header {
-      padding: 24px 24px 20px;
-      border-bottom: 1px solid var(--border);
+      padding: var(--space-24) var(--space-24) var(--space-16);
+      border-bottom: 1px solid var(--color-border);
     }
 
     .panel-header h1 {
-      font-size: 1.5rem;
-      margin: 0 0 4px;
+      font-size: var(--font-size-xl);
+      margin: 0 0 var(--space-4);
     }
 
     .plate {
       display: inline-block;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.875rem;
+      font-family: var(--font-family-mono);
+      font-size: var(--font-size-sm);
       font-weight: 600;
       letter-spacing: 0.06em;
-      padding: 2px 8px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      background: var(--bg);
+      padding: var(--space-4) var(--space-8);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-background);
     }
 
     .header-meta {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
-      margin-top: 8px;
+      gap: var(--space-8);
+      margin-top: var(--space-8);
     }
 
     .status {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 2px 10px;
-      border-radius: 999px;
-      font-size: 0.8125rem;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-8);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
       font-weight: 600;
-      background: var(--status-active-bg);
-      color: var(--status-active-text);
+      background: var(--color-success-bg);
+      color: var(--color-success);
     }
 
     .status::before {
@@ -199,25 +160,25 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--status-active-dot);
+      background: var(--color-success);
     }
 
     .details {
       margin: 0;
-      padding: 8px 24px;
+      padding: var(--space-8) var(--space-24);
     }
 
     .detail {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
+      padding: var(--space-12) 0;
+      border-bottom: 1px solid var(--color-border);
     }
 
     .detail:last-child { border-bottom: 0; }
 
     .detail dt {
-      font-size: 0.8125rem;
-      color: var(--muted);
-      margin-bottom: 2px;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
     }
 
     .detail dd {
@@ -228,16 +189,16 @@
     .detail .sub {
       display: block;
       font-weight: 400;
-      font-size: 0.875rem;
-      color: var(--muted);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
     }
 
     .panel-actions {
       margin-top: auto;
-      padding: 16px 24px 24px;
+      padding: var(--space-16) var(--space-24) var(--space-24);
       display: flex;
-      gap: 8px;
-      border-top: 1px solid var(--border);
+      gap: var(--space-8);
+      border-top: 1px solid var(--color-border);
     }
 
     .button-primary,
@@ -245,33 +206,33 @@
       flex: 1;
       font: inherit;
       font-weight: 600;
-      padding: 10px 16px;
-      border-radius: 8px;
+      padding: var(--space-8) var(--space-16);
+      border-radius: var(--radius-md);
       white-space: nowrap;
       cursor: pointer;
     }
 
     .button-primary {
       border: 0;
-      background: var(--primary);
-      color: var(--on-primary);
+      background: var(--color-primary);
+      color: var(--color-on-primary);
     }
 
-    .button-primary:hover { background: var(--primary-hover); }
+    .button-primary:hover { background: var(--color-primary-hover); }
 
     .button-secondary {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
     }
 
-    .button-secondary:hover { border-color: var(--muted); }
+    .button-secondary:hover { border-color: var(--color-text-muted); }
 
     .button-primary:focus-visible,
     .button-secondary:focus-visible,
     .map-control:focus-visible,
     .map-back:focus-visible {
-      outline: 3px solid var(--primary);
+      outline: 3px solid var(--color-primary);
       outline-offset: 3px;
     }
 
@@ -286,15 +247,15 @@
 
       .panel {
         border-left: 0;
-        border-top: 1px solid var(--border);
+        border-top: 1px solid var(--color-border);
         overflow: visible;
       }
 
       .details,
       .panel-header,
       .panel-actions {
-        padding-left: 16px;
-        padding-right: 16px;
+        padding-left: var(--space-16);
+        padding-right: var(--space-16);
       }
     }
   </style>
@@ -304,25 +265,25 @@
     <section class="map" aria-label="Map showing the vehicle's current location">
       <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <!-- Water -->
-        <path d="M0 640 C 180 600, 320 700, 520 660 S 860 600, 1000 650 L 1000 800 L 0 800 Z" fill="var(--map-water)"/>
+        <path d="M0 640 C 180 600, 320 700, 520 660 S 860 600, 1000 650 L 1000 800 L 0 800 Z" fill="var(--color-map-water)"/>
         <!-- Parks and blocks -->
-        <rect x="80" y="90" width="190" height="140" rx="10" fill="var(--map-park)"/>
-        <rect x="330" y="90" width="160" height="140" rx="6" fill="var(--map-block)"/>
-        <rect x="560" y="90" width="170" height="140" rx="6" fill="var(--map-block)"/>
-        <rect x="790" y="90" width="170" height="140" rx="6" fill="var(--map-block)"/>
-        <rect x="80" y="300" width="190" height="200" rx="6" fill="var(--map-block)"/>
-        <rect x="330" y="300" width="160" height="200" rx="6" fill="var(--map-block)"/>
-        <rect x="790" y="300" width="170" height="200" rx="10" fill="var(--map-park)"/>
-        <rect x="660" y="430" width="80" height="80" rx="6" fill="var(--map-block)"/>
+        <rect x="80" y="90" width="190" height="140" rx="10" fill="var(--color-map-park)"/>
+        <rect x="330" y="90" width="160" height="140" rx="6" fill="var(--color-map-block)"/>
+        <rect x="560" y="90" width="170" height="140" rx="6" fill="var(--color-map-block)"/>
+        <rect x="790" y="90" width="170" height="140" rx="6" fill="var(--color-map-block)"/>
+        <rect x="80" y="300" width="190" height="200" rx="6" fill="var(--color-map-block)"/>
+        <rect x="330" y="300" width="160" height="200" rx="6" fill="var(--color-map-block)"/>
+        <rect x="790" y="300" width="170" height="200" rx="10" fill="var(--color-map-park)"/>
+        <rect x="660" y="430" width="80" height="80" rx="6" fill="var(--color-map-block)"/>
         <!-- Roads -->
-        <g stroke="var(--map-road-edge)" stroke-width="30" fill="none" stroke-linecap="round">
+        <g stroke="var(--color-map-road-edge)" stroke-width="30" fill="none" stroke-linecap="round">
           <path d="M0 265 H1000"/>
           <path d="M0 545 C 300 545, 600 560, 1000 560"/>
           <path d="M300 0 V560"/>
           <path d="M760 0 V560"/>
           <path d="M525 0 V265 L 580 368 L 760 368"/>
         </g>
-        <g stroke="var(--map-road)" stroke-width="24" fill="none" stroke-linecap="round">
+        <g stroke="var(--color-map-road)" stroke-width="24" fill="none" stroke-linecap="round">
           <path d="M0 265 H1000"/>
           <path d="M0 545 C 300 545, 600 560, 1000 560"/>
           <path d="M300 0 V560"/>
@@ -330,7 +291,7 @@
           <path d="M525 0 V265 L 580 368 L 760 368"/>
         </g>
         <!-- Route travelled -->
-        <path d="M300 545 V265 H525 L 580 368" stroke="var(--map-route)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12" opacity="0.8"/>
+        <path d="M300 545 V265 H525 L 580 368" stroke="var(--color-primary)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12" opacity="0.8"/>
         <!-- Labels -->
         <text class="map-label" x="175" y="165" text-anchor="middle">Riverside Park</text>
         <text class="map-label" x="200" y="290" text-anchor="middle">Harbor Rd</text>
