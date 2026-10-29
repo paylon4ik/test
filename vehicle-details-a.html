@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vehicle details</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --surface-alt: #f9fafb;
+      --border: #e3e6ea;
+      --text: #1b1f24;
+      --muted: #5b6470;
+      --primary: #2459d6;
+      --primary-hover: #1c48b0;
+      --on-primary: #ffffff;
+      --status-active-bg: #e3f4e8;
+      --status-active-text: #17663a;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111418;
+        --surface: #1a1e24;
+        --surface-alt: #1e232a;
+        --border: #2b3139;
+        --text: #eef1f4;
+        --muted: #a2abb6;
+        --primary: #5b8cff;
+        --primary-hover: #7aa2ff;
+        --on-primary: #0b1020;
+        --status-active-bg: #173323;
+        --status-active-text: #7fd8a0;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 16px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: var(--primary);
+      font-size: 0.875rem;
+      text-decoration: none;
+      margin-bottom: 8px;
+    }
+
+    .back-link:hover { text-decoration: underline; }
+
+    .page-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .details-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: 0.875rem;
+    }
+
+    .details-table th,
+    .details-table td {
+      text-align: left;
+      vertical-align: top;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .details-table tr:last-child th,
+    .details-table tr:last-child td { border-bottom: 0; }
+
+    .details-table thead th {
+      background: var(--surface-alt);
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .details-table tbody th {
+      width: 9rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .details-table .meta { color: var(--muted); }
+
+    .numeric { font-variant-numeric: tabular-nums; }
+
+    .status {
+      display: inline-block;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: var(--status-active-bg);
+      color: var(--status-active-text);
+    }
+
+    .button-primary {
+      display: inline-block;
+      font: inherit;
+      font-weight: 600;
+      padding: 10px 20px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--primary);
+      color: var(--on-primary);
+      cursor: pointer;
+    }
+
+    .button-primary:hover { background: var(--primary-hover); }
+
+    .button-primary:focus-visible,
+    .back-link:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 480px) {
+      .details-table th,
+      .details-table td { padding: 8px; }
+      .details-table tbody th { width: 6.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="back-link" href="vehicles.html">Back to vehicles</a>
+    <div class="page-header">
+      <h1>Ford Transit 2.0</h1>
+      <button type="button" class="button-primary">Edit vehicle</button>
+    </div>
+
+    <table class="details-table">
+      <thead>
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+          <th scope="col">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Name</th>
+          <td>Ford Transit 2.0</td>
+          <td class="meta">Van · Unit 014</td>
+        </tr>
+        <tr>
+          <th scope="row">Plate</th>
+          <td class="numeric">KX21 PLM</td>
+          <td class="meta">Registered Mar 2021</td>
+        </tr>
+        <tr>
+          <th scope="row">Status</th>
+          <td><span class="status">Active</span></td>
+          <td class="meta">Since 08:12 today</td>
+        </tr>
+        <tr>
+          <th scope="row">Driver</th>
+          <td>Maria Lopez</td>
+          <td class="meta">Assigned 2 Sep 2026</td>
+        </tr>
+        <tr>
+          <th scope="row">Location</th>
+          <td>Depot North, Leeds</td>
+          <td class="meta">Updated 4 min ago</td>
+        </tr>
+        <tr>
+          <th scope="row">Last service</th>
+          <td class="numeric">14 Aug 2026</td>
+          <td class="meta">Next due 14 Feb 2027</td>
+        </tr>
+        <tr>
+          <th scope="row">Mileage</th>
+          <td class="numeric">48,215 mi</td>
+          <td class="meta numeric">+1,240 mi this month</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
